@@ -1,3 +1,4 @@
+/* @flow */
 import SyncbackModelTask from './syncback-model-task'
 import DatabaseObjectRegistry from '../../database-object-registry'
 

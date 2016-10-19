@@ -1,3 +1,4 @@
+/* @flow */
 import UndoStack from "../src/undo-stack";
 
 describe("UndoStack", function UndoStackSpecs() {

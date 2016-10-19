@@ -1,3 +1,4 @@
+/* @flow */
 /*
 Public: Represents a particular sort direction on a particular column. You should not
 instantiate SortOrders manually. Instead, call {Attribute::ascending} or

@@ -1,3 +1,4 @@
+/* @flow */
 import {Table} from 'nylas-component-kit'
 
 export const testData = {

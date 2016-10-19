@@ -1,3 +1,4 @@
+/* @flow */
 import {app, protocol} from 'electron';
 import fs from 'fs';
 import path from 'path';

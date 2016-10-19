@@ -1,3 +1,4 @@
+/* @flow */
 import {Actions, Utils} from 'nylas-exports';
 
 function _runOnImageNode(node) {

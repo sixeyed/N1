@@ -1,3 +1,4 @@
+/* @flow */
 import {PreferencesUIStore, ExtensionRegistry, SignatureStore, ComponentRegistry} from 'nylas-exports';
 
 import SignatureComposerExtension from './signature-composer-extension';

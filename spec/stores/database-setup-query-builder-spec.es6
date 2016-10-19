@@ -1,3 +1,4 @@
+/* @flow */
 /* eslint quote-props: 0 */
 import TestModel from '../fixtures/db-test-model';
 import Attributes from '../../src/flux/attributes';

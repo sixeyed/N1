@@ -1,3 +1,4 @@
+/* @flow */
 import {DOMUtils, ContenteditableExtension} from 'nylas-exports';
 
 export default class TemplateEditor extends ContenteditableExtension {

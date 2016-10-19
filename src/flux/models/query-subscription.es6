@@ -1,3 +1,4 @@
+/* @flow */
 import _ from 'underscore';
 import DatabaseStore from '../stores/database-store';
 import QueryRange from './query-range';

@@ -1,3 +1,4 @@
+/* @flow */
 /* eslint global-require:0 */
 import Model from '../models/model';
 import {tableNameForJoin, registeredObjectReplacer} from '../models/utils';

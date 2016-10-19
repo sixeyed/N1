@@ -1,3 +1,4 @@
+/* @flow */
 export default {
   TEST_TIME_ZONE: "America/Los_Angeles",
   TEST_PLUGIN_ID: "test-plugin-id-123",

@@ -1,3 +1,4 @@
+/* @flow */
 import Model from './model';
 import Query from './query';
 import Attributes from '../attributes';

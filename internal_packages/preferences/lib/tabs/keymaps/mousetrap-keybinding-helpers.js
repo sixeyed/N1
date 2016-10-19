@@ -1,3 +1,4 @@
+/* @flow */
 /* eslint-disable */
 /**
  * mapping of special keycodes to their corresponding keys

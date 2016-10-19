@@ -1,3 +1,4 @@
+/* @flow */
 import {ComponentRegistry} from 'nylas-exports';
 import {HasTutorialTip} from 'nylas-component-kit';
 

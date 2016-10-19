@@ -1,3 +1,4 @@
+/* @flow */
 import {Message, SignatureStore} from 'nylas-exports';
 import SignatureComposerExtension from '../lib/signature-composer-extension';
 

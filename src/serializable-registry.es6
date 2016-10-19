@@ -1,3 +1,4 @@
+/* @flow */
 /**
  * Public: This keeps track of constructors so we know how to inflate
  * serialized objects.

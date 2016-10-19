@@ -1,3 +1,4 @@
+/* @flow */
 const DOMWalkers = {
   * walk(...treeWalkerArgs) {
     const walker = document.createTreeWalker(...treeWalkerArgs);

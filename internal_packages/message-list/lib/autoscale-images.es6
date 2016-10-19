@@ -1,3 +1,4 @@
+/* @flow */
 
 function _getDimension(node, dim) {
   const raw = node.style[dim] || node[dim];

@@ -1,3 +1,4 @@
+/* @flow */
 import {AccountStore, Actions} from 'nylas-exports';
 import PrintWindow from './print-window';
 

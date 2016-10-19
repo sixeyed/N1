@@ -1,3 +1,4 @@
+/* @flow */
 /* eslint global-require: 0*/
 import {dialog} from 'electron';
 import {EventEmitter} from 'events';

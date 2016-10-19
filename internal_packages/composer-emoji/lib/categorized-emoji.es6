@@ -1,3 +1,4 @@
+/* @flow */
 const categorizedEmojiList = {
   'People': [
     'grinning',

@@ -1,3 +1,4 @@
+/* @flow */
 import Task from './task';
 import Actions from '../actions';
 import DatabaseStore from '../stores/database-store';

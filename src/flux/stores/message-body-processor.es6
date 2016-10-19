@@ -1,3 +1,4 @@
+/* @flow */
 import _ from 'underscore';
 import Message from '../models/message';
 import MessageStore from './message-store';

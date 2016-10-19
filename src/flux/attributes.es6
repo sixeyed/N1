@@ -1,3 +1,4 @@
+/* @flow */
 import Matcher from './attributes/matcher'
 import SortOrder from './attributes/sort-order'
 import AttributeNumber from './attributes/attribute-number'

@@ -1,3 +1,4 @@
+/* @flow */
 import fs from 'fs'
 import Utils from './flux/models/utils'
 

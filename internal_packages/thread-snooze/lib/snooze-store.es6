@@ -1,3 +1,4 @@
+/* @flow */
 import _ from 'underscore';
 import {Actions, NylasAPI, AccountStore, CategoryStore} from 'nylas-exports';
 import SnoozeUtils from './snooze-utils'

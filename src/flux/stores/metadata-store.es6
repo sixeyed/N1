@@ -1,3 +1,4 @@
+/* @flow */
 import _ from 'underscore';
 import NylasStore from 'nylas-store';
 import Actions from '../actions';

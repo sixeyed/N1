@@ -1,3 +1,4 @@
+/* @flow */
 import request from 'request'
 import {remote} from 'electron'
 import Utils from './models/utils'

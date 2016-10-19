@@ -1,3 +1,4 @@
+/* @flow */
 import Model from './model'
 import Attributes from '../attributes'
 

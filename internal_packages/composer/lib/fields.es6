@@ -1,3 +1,4 @@
+/* @flow */
 const Fields = {
   To: "textFieldTo",
   Cc: "textFieldCc",

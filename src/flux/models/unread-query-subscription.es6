@@ -1,3 +1,4 @@
+/* @flow */
 import MutableQuerySubscription from './mutable-query-subscription';
 import DatabaseStore from '../stores/database-store';
 import RecentlyReadStore from '../stores/recently-read-store';

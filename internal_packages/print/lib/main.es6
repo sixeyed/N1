@@ -1,3 +1,4 @@
+/* @flow */
 import Printer from './printer';
 
 let printer = null;

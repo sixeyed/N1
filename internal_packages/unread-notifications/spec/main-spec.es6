@@ -1,3 +1,4 @@
+/* @flow */
 import Contact from '../../../src/flux/models/contact'
 import Message from '../../../src/flux/models/message'
 import Thread from '../../../src/flux/models/thread'

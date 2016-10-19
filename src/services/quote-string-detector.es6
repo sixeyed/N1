@@ -1,3 +1,4 @@
+/* @flow */
 import DOMWalkers from '../dom-walkers'
 
 /*

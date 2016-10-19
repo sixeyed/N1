@@ -1,3 +1,4 @@
+/* @flow */
 import {ComponentRegistry, WorkspaceStore} from "nylas-exports";
 
 import ThreadList from './thread-list';

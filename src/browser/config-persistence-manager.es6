@@ -1,3 +1,4 @@
+/* @flow */
 import path from 'path';
 import pathWatcher from 'pathwatcher';
 import fs from 'fs-plus';

@@ -1,3 +1,4 @@
+/* @flow */
 import RealDOMParser from './real-dom-parser'
 
 export default class IFrameSearcher {

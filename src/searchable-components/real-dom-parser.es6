@@ -1,3 +1,4 @@
+/* @flow */
 import _ from 'underscore'
 import {DOMUtils} from 'nylas-exports'
 import UnifiedDOMParser from './unified-dom-parser'

@@ -1,3 +1,4 @@
+/* @flow */
 import QueryResultSet from './query-result-set';
 import AttributeJoinedData from '../attributes/attribute-joined-data';
 

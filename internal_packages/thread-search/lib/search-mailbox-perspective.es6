@@ -1,3 +1,4 @@
+/* @flow */
 import _ from 'underscore'
 import {AccountStore, TaskFactory, MailboxPerspective} from 'nylas-exports'
 import SearchQuerySubscription from './search-query-subscription'

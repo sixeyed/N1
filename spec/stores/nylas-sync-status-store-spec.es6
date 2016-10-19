@@ -1,3 +1,4 @@
+/* @flow */
 import {NylasSyncStatusStore} from 'nylas-exports'
 
 const store = NylasSyncStatusStore

@@ -1,3 +1,4 @@
+/* @flow */
 import {Utils} from 'nylas-exports'
 import NylasStore from 'nylas-store'
 import ClearbitDataSource from './clearbit-data-source'

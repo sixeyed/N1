@@ -1,3 +1,4 @@
+/* @flow */
 import { remote } from 'electron';
 
 describe("the `NylasEnv` global", function nylasEnvSpec() {

@@ -1,3 +1,4 @@
+/* @flow */
 import Matcher from './matcher';
 import SortOrder from './sort-order';
 

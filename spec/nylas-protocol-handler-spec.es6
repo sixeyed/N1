@@ -1,3 +1,4 @@
+/* @flow */
 describe('"nylas" protocol URL', () => {
   it('sends the file relative in the package as response', () => {
     let called = false;

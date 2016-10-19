@@ -1,3 +1,4 @@
+/* @flow */
 import NylasStore from 'nylas-store';
 import ChangeUnreadTask from '../tasks/change-unread-task';
 import ChangeLabelsTask from '../tasks/change-labels-task';

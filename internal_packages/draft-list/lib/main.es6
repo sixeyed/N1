@@ -1,3 +1,4 @@
+/* @flow */
 import {WorkspaceStore, ComponentRegistry, Actions} from 'nylas-exports'
 import DraftList from './draft-list'
 import DraftListToolbar from './draft-list-toolbar'

@@ -1,3 +1,4 @@
+/* @flow */
 import pathwatcher from 'pathwatcher';
 import ReactTestUtils from 'react-addons-test-utils';
 

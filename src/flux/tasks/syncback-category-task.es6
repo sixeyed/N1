@@ -1,3 +1,4 @@
+/* @flow */
 import DatabaseStore from '../stores/database-store';
 import AccountStore from '../stores/account-store';
 import Task from './task';

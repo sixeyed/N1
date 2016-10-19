@@ -1,3 +1,4 @@
+/* @flow */
 import NylasStore from 'nylas-store';
 import {remote} from 'electron';
 

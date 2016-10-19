@@ -1,3 +1,4 @@
+/* @flow */
 /* eslint quote-props: 0 */
 import ModelQuery from '../../src/flux/models/query';
 import Attributes from '../../src/flux/attributes';

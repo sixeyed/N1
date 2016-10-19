@@ -1,3 +1,4 @@
+/* @flow */
 const ChildProcess = require('child_process');
 const fs = require('fs-plus');
 const path = require('path');

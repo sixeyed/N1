@@ -1,3 +1,4 @@
+/* @flow */
 import {remote} from 'electron';
 import {SpellCheckHandler} from 'electron-spellchecker';
 import fs from 'fs';

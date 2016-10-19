@@ -1,3 +1,4 @@
+/* @flow */
 import SerializableRegistry from './serializable-registry'
 
 class DatabaseObjectRegistry extends SerializableRegistry { }

@@ -1,3 +1,4 @@
+/* @flow */
 import NylasStore from 'nylas-store';
 import fs from 'fs';
 import path from 'path';

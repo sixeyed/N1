@@ -1,3 +1,4 @@
+/* @flow */
 import {ExtensionRegistry} from 'nylas-exports';
 import SpellcheckComposerExtension from './spellcheck-composer-extension';
 

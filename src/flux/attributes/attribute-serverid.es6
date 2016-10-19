@@ -1,3 +1,4 @@
+/* @flow */
 import AttributeString from './attribute-string';
 import Utils from '../models/utils';
 

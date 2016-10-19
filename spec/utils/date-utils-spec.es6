@@ -1,3 +1,4 @@
+/* @flow */
 import moment from 'moment'
 import {DateUtils} from 'nylas-exports'
 

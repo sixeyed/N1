@@ -1,3 +1,4 @@
+/* @flow */
 /* eslint dot-notation:0 */
 import Category from '../../src/flux/models/category';
 import TestModel from '../fixtures/db-test-model';

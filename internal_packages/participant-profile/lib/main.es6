@@ -1,3 +1,4 @@
+/* @flow */
 import {ComponentRegistry} from 'nylas-exports'
 import ParticipantProfileStore from './participant-profile-store'
 import SidebarParticipantProfile from './sidebar-participant-profile'

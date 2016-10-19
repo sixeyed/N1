@@ -1,3 +1,4 @@
+/* @flow */
 import NylasStore from 'nylas-store';
 import SendDraftTask from '../tasks/send-draft-task';
 import SyncbackDraftTask from '../tasks/syncback-draft-task';

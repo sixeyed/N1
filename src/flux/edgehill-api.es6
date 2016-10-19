@@ -1,3 +1,4 @@
+/* @flow */
 import AccountStore from './stores/account-store'
 import NylasAPIRequest from './nylas-api-request';
 

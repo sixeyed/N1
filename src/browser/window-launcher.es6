@@ -1,3 +1,4 @@
+/* @flow */
 import NylasWindow from './nylas-window'
 
 const DEBUG_SHOW_HOT_WINDOW = false;

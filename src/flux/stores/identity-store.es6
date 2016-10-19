@@ -1,3 +1,4 @@
+/* @flow */
 import NylasStore from 'nylas-store';
 import keytar from 'keytar';
 import {ipcRenderer, remote} from 'electron';

@@ -1,3 +1,4 @@
+/* @flow */
 /* eslint global-require: 0 */
 /* eslint import/no-dynamic-require: 0 */
 import _ from 'underscore';

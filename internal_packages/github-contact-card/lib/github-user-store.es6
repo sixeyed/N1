@@ -1,3 +1,4 @@
+/* @flow */
 import _ from 'underscore';
 import request from 'request';
 import NylasStore from 'nylas-store';

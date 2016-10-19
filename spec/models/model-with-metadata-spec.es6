@@ -1,3 +1,4 @@
+/* @flow */
 import ModelWithMetadata from '../../src/flux/models/model-with-metadata'
 
 class TestModel extends ModelWithMetadata {

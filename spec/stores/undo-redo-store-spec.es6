@@ -1,3 +1,4 @@
+/* @flow */
 import {Actions, Task, UndoRedoStore} from 'nylas-exports'
 
 class Undoable extends Task {

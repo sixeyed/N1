@@ -1,3 +1,4 @@
+/* @flow */
 /* eslint global-require:0 */
 import NylasStore from 'nylas-store';
 import FocusedPerspectiveStore from './focused-perspective-store';

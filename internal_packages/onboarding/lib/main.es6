@@ -1,3 +1,4 @@
+/* @flow */
 import {SystemStartService, WorkspaceStore, ComponentRegistry} from 'nylas-exports';
 import OnboardingRoot from './onboarding-root';
 

@@ -1,3 +1,4 @@
+/* @flow */
 
 export default function compose(BaseComponent, ...decorators) {
   const ComposedComponent =

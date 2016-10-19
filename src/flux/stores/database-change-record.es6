@@ -1,3 +1,4 @@
+/* @flow */
 import Utils from '../models/utils';
 
 /*

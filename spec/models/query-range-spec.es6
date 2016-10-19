@@ -1,3 +1,4 @@
+/* @flow */
 import QueryRange from '../../src/flux/models/query-range';
 
 describe("QueryRange", function QueryRangeSpecs() {

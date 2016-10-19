@@ -1,3 +1,4 @@
+/* @flow */
 import _ from 'underscore';
 import {app} from 'electron';
 import WindowLauncher from './window-launcher';

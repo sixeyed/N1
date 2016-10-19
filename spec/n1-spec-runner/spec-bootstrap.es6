@@ -1,3 +1,4 @@
+/* @flow */
 // Swap out Node's native Promise for Bluebird, which allows us to
 // do fancy things like handle exceptions inside promise blocks
 global.Promise = require('bluebird');

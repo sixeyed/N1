@@ -1,3 +1,4 @@
+/* @flow */
 
 // The "Anchor" is the element we place in the actual contenteditable
 // component to keep track of where we should overlay the main

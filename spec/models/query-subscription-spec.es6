@@ -1,3 +1,4 @@
+/* @flow */
 import DatabaseStore from '../../src/flux/stores/database-store';
 
 import QueryRange from '../../src/flux/models/query-range';

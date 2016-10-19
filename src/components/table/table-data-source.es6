@@ -1,3 +1,4 @@
+/* @flow */
 /**
  * Base class that defines an interface to access table data.
  * All methods that modify data are immutable, which means a new instance of

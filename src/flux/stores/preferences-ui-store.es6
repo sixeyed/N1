@@ -1,3 +1,4 @@
+/* @flow */
 import {ipcRenderer} from 'electron';
 import _ from 'underscore'
 import NylasStore from 'nylas-store'

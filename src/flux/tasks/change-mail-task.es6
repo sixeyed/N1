@@ -1,3 +1,4 @@
+/* @flow */
 /* eslint no-unused-vars: 0*/
 import _ from 'underscore';
 import Task from './task';

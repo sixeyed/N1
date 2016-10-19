@@ -1,3 +1,4 @@
+/* @flow */
 const originalLog = console.log;
 const originalWarn = console.warn;
 const originalError = console.error;

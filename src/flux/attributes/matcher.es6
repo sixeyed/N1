@@ -1,3 +1,4 @@
+/* @flow */
 import {tableNameForJoin} from '../models/utils';
 
 // https://www.sqlite.org/faq.html#q14

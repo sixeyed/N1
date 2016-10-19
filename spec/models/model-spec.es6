@@ -1,3 +1,4 @@
+/* @flow */
 /* eslint quote-props: 0 */
 import _ from 'underscore';
 

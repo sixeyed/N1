@@ -1,3 +1,4 @@
+/* @flow */
 import Task from '../../src/flux/tasks/task'
 
 // We need to subclass in ES6 since coffeescript can't subclass an ES6

@@ -1,3 +1,4 @@
+/* @flow */
 import {ipcRenderer} from 'electron';
 import {BadgeStore} from 'nylas-exports';
 import SystemTrayIconStore from '../lib/system-tray-icon-store';

@@ -1,3 +1,4 @@
+/* @flow */
 import {Category, Actions} from "nylas-exports"
 import SidebarItem from "../lib/sidebar-item"
 

@@ -1,3 +1,4 @@
+/* @flow */
 import {ComponentRegistry} from 'nylas-exports'
 import PersonalLevelIcon from './personal-level-icon'
 

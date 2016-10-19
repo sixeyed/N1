@@ -1,3 +1,4 @@
+/* @flow */
 import QueryRange from './query-range';
 
 /*

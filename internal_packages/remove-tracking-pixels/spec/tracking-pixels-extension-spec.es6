@@ -1,3 +1,4 @@
+/* @flow */
 /* eslint no-irregular-whitespace: 0 */
 import fs from 'fs';
 import {removeTrackingPixels} from '../lib/main';

@@ -1,3 +1,4 @@
+/* @flow */
 import SearchIndexStore from './search-index-store'
 
 

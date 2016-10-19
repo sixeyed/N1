@@ -1,3 +1,4 @@
+/* @flow */
 import SystemTrayIconStore from './system-tray-icon-store';
 
 export function activate() {

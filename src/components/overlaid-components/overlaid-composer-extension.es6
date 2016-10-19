@@ -1,3 +1,4 @@
+/* @flow */
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import ComposerExtension from '../../extensions/composer-extension'

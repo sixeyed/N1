@@ -1,3 +1,4 @@
+/* @flow */
 (function() {
   function rebuildMessages(messageNodes, messages) {
     // Simply insert the message html inside the appropriate node

@@ -1,3 +1,4 @@
+/* @flow */
 import _ from 'underscore'
 import React from 'react'
 import {VirtualDOMUtils} from 'nylas-exports'

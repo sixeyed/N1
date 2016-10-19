@@ -1,3 +1,4 @@
+/* @flow */
 import {DOMUtils, ComposerExtension} from 'nylas-exports';
 
 export default class TemplatesComposerExtension extends ComposerExtension {

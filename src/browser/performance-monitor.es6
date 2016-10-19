@@ -1,3 +1,4 @@
+/* @flow */
 import Utils from '../../src/flux/models/utils'
 const BUFFER_SIZE = 100;
 

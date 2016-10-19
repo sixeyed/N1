@@ -1,3 +1,4 @@
+/* @flow */
 import _ from 'underscore';
 import Thread from '../models/thread';
 import Category from '../models/category';

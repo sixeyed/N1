@@ -1,3 +1,4 @@
+/* @flow */
 /* eslint global-require: 0 */
 import {RegExpUtils} from 'nylas-exports';
 import Task from './task';

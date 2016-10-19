@@ -1,3 +1,4 @@
+/* @flow */
 import moment from 'moment-timezone'
 import {Event} from 'nylas-exports'
 import {TZ, TEST_CALENDAR} from '../test-utils'

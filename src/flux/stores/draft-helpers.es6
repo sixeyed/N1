@@ -1,3 +1,4 @@
+/* @flow */
 import Actions from '../actions'
 import DatabaseStore from './database-store'
 import Message from '../models/message'

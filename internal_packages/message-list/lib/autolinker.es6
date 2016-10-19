@@ -1,3 +1,4 @@
+/* @flow */
 import {RegExpUtils, DOMUtils} from 'nylas-exports';
 
 function _matchesAnyRegexp(text, regexps) {

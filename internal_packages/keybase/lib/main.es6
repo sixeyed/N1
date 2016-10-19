@@ -1,3 +1,4 @@
+/* @flow */
 import {PreferencesUIStore, ComponentRegistry, ExtensionRegistry} from 'nylas-exports';
 
 import EncryptMessageButton from './encrypt-button';

@@ -1,3 +1,4 @@
+/* @flow */
 import RegExpUtils from '../regexp-utils';
 
 export function getFunctionArgs(func) {

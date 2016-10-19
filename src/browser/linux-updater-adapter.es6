@@ -1,3 +1,4 @@
+/* @flow */
 import {EventEmitter} from 'events';
 import request from 'request';
 import _ from 'underscore';

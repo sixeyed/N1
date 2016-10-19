@@ -1,3 +1,4 @@
+/* @flow */
 import moment from 'moment-timezone'
 
 export const TZ = window.TEST_TIME_ZONE;

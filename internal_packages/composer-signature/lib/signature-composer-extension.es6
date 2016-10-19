@@ -1,3 +1,4 @@
+/* @flow */
 import {ComposerExtension, SignatureStore} from 'nylas-exports';
 import SignatureUtils from './signature-utils';
 

@@ -1,3 +1,4 @@
+/* @flow */
 class ServiceRegistry {
   constructor() {
     this._waitingForServices = {};

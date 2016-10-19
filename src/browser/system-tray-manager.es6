@@ -1,3 +1,4 @@
+/* @flow */
 import {Tray, Menu, nativeImage} from 'electron';
 
 

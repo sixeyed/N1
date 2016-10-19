@@ -1,3 +1,4 @@
+/* @flow */
 import Rx from 'rx-lite'
 import Event from '../../flux/models/event'
 import Matcher from '../../flux/attributes/matcher'

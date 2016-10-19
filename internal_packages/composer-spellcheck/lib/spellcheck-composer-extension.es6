@@ -1,3 +1,4 @@
+/* @flow */
 import {DOMUtils, ComposerExtension, Spellchecker} from 'nylas-exports';
 
 const recycled = [];

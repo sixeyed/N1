@@ -1,3 +1,4 @@
+/* @flow */
 // This file cannot be Coffeescript because it loads before the
 // Coffeescript interpreter. Note that it runs in both browser and
 // renderer processes.

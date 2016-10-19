@@ -1,3 +1,4 @@
+/* @flow */
 /* eslint no-unused-vars:0 */
 
 import {ComponentRegistry, WorkspaceStore} from 'nylas-exports';

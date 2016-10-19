@@ -1,3 +1,4 @@
+/* @flow */
 import moment from 'moment-timezone'
 import chrono from 'chrono-node'
 import _ from 'underscore'

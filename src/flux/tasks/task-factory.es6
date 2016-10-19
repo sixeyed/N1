@@ -1,3 +1,4 @@
+/* @flow */
 import _ from 'underscore'
 import ChangeFolderTask from './change-folder-task'
 import ChangeLabelsTask from './change-labels-task'

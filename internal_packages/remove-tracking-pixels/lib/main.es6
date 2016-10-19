@@ -1,3 +1,4 @@
+/* @flow */
 /* eslint no-cond-assign: 0 */
 
 import {

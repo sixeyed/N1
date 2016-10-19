@@ -1,3 +1,4 @@
+/* @flow */
 /* eslint react/no-render-return-value: 0 */
 import _ from 'underscore';
 import ReactDOM from "react-dom";

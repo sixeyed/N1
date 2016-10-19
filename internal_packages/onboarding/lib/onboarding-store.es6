@@ -1,3 +1,4 @@
+/* @flow */
 import {AccountStore, Actions, IdentityStore} from 'nylas-exports';
 import {ipcRenderer} from 'electron';
 import NylasStore from 'nylas-store';

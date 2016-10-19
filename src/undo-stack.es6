@@ -1,3 +1,4 @@
+/* @flow */
 import _ from 'underscore';
 
 export default class UndoStack {

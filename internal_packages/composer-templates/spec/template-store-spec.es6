@@ -1,3 +1,4 @@
+/* @flow */
 import fs from 'fs';
 import { remote } from 'electron';
 import {Message, DraftStore} from 'nylas-exports';

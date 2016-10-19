@@ -1,3 +1,4 @@
+/* @flow */
 import {Utils, Actions, AccountStore} from 'nylas-exports';
 import NylasStore from 'nylas-store'
 import _ from 'underscore'

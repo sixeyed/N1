@@ -1,3 +1,4 @@
+/* @flow */
 import {RegExpUtils} from 'nylas-exports';
 
 import Task from './task';

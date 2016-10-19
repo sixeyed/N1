@@ -1,3 +1,4 @@
+/* @flow */
 class CustomContenteditableComponents {
   constructor() {
     this._components = {}

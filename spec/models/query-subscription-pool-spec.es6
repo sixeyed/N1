@@ -1,3 +1,4 @@
+/* @flow */
 import QuerySubscriptionPool from '../../src/flux/models/query-subscription-pool';
 import DatabaseStore from '../../src/flux/stores/database-store';
 import Label from '../../src/flux/models/label';

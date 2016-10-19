@@ -1,3 +1,4 @@
+/* @flow */
 /* eslint global-require: "off" */
 
 import {BrowserWindow, Menu, app, ipcMain, dialog} from 'electron';

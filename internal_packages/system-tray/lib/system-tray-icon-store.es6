@@ -1,3 +1,4 @@
+/* @flow */
 import path from 'path';
 import {ipcRenderer} from 'electron';
 import {BadgeStore} from 'nylas-exports';

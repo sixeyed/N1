@@ -1,3 +1,4 @@
+/* @flow */
 /* eslint global-require:0 */
 import _ from 'underscore';
 import Grim from 'grim';

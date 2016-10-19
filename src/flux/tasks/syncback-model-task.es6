@@ -1,3 +1,4 @@
+/* @flow */
 import _ from 'underscore'
 import Task from './task'
 import NylasAPI from '../nylas-api'

@@ -1,3 +1,4 @@
+/* @flow */
 import Attribute from './attribute';
 import Matcher from './matcher';
 

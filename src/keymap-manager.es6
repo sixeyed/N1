@@ -1,3 +1,4 @@
+/* @flow */
 import fs from 'fs-plus'
 import path from 'path'
 import mousetrap from 'mousetrap'

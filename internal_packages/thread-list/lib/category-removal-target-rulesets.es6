@@ -1,3 +1,4 @@
+/* @flow */
 import {AccountStore, CategoryStore} from 'nylas-exports';
 
 

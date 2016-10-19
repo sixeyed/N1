@@ -1,3 +1,4 @@
+/* @flow */
 import QuerySubscription from './query-subscription'
 
 class MutableQuerySubscription extends QuerySubscription {

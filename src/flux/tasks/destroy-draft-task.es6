@@ -1,3 +1,4 @@
+/* @flow */
 import Task from './task';
 import {APIError} from '../errors';
 import Message from '../models/message';

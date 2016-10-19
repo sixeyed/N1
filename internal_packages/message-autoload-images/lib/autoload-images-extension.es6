@@ -1,3 +1,4 @@
+/* @flow */
 import {MessageViewExtension} from 'nylas-exports';
 import AutoloadImagesStore from './autoload-images-store';
 

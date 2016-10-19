@@ -1,3 +1,4 @@
+/* @flow */
 // import Rx from 'rx-lite-testing'
 import {CalendarDataSource} from 'nylas-exports'
 import {events} from './fixtures/events'

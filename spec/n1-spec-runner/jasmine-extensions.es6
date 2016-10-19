@@ -1,3 +1,4 @@
+/* @flow */
 /* eslint no-prototype-builtins: 0 */
 import _ from 'underscore';
 import moment from 'moment-timezone';
