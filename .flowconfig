@@ -1,2 +1,2 @@
 [ignore]
-.*\.json$
+<PROJECT_ROOT>/.*\.json$
