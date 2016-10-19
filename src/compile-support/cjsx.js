@@ -1,4 +1,3 @@
-/* @flow */
 CoffeeScript = require('coffee-react');
 
 // TODO: Remove react-hot-api (which is deprecated) in favor of react-proxy

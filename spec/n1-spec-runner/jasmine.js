@@ -1,4 +1,3 @@
-/* @flow */
 // Modified line
 // - var isCommonJS = typeof window == "undefined" && typeof exports == "object";
 // + var isCommonJS = typeof exports == "object";
