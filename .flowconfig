@@ -1,2 +1,4 @@
 [ignore]
 <PROJECT_ROOT>/.*\.json$
+<PROJECT_ROOT>/.*node_modules/.*node_modules.*
+<PROJECT_ROOT>/src/pro/packages/nylas-private-analytics/node_modules/editions/.*
