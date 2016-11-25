@@ -94,6 +94,10 @@ export default class Application extends EventEmitter {
     return this.windowManager.get(WindowManager.MAIN_WINDOW).browserWindow;
   }
 
+  getAllWindowDimensions() {
+    return this.windowManager.getAllWindowDimensions()
+  }
+
   isQuitting() {
     return this.quitting;
   }
@@ -703,6 +707,8 @@ export default class Application extends EventEmitter {
     } else if (parts.protocol === 'nylas:') {
       if (parts.host === 'calendar') {
         this.openCalendarURL(parts.path);
+      } else if (parts.host === 'plugins') {
+        main.sendMessage('changePluginStateFromUrl', urlToOpen);
       } else {
         main.sendMessage('openExternalThread', urlToOpen);
       }

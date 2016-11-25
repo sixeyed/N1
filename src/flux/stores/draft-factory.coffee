@@ -1,6 +1,6 @@
 _ = require 'underscore'
 
-Actions = require '../actions'
+Actions = require('../actions').default
 DatabaseStore = require('./database-store').default
 AccountStore = require './account-store'
 ContactStore = require './contact-store'
@@ -11,7 +11,7 @@ DraftStore = null
 DraftHelpers = require './draft-helpers'
 
 Thread = require('../models/thread').default
-Contact = require '../models/contact'
+Contact = require('../models/contact').default
 Message = require('../models/message').default
 Utils = require '../models/utils'
 
@@ -38,7 +38,11 @@ class DraftFactory
     try
       urlString = decodeURI(urlString)
 
-    [whole, to, queryString] = /mailto:\/*([^\?\&]*)((.|\n|\r)*)/.exec(urlString)
+    match = /mailto:\/*([^\?\&]*)((.|\n|\r)*)/.exec(urlString)
+    if not match
+      return Promise.reject(new Error("#{urlString} is not a valid mailto URL."))
+
+    [whole, to, queryString] = match
 
     if to.length > 0 and to.indexOf('@') is -1
       to = decodeURIComponent(to)
@@ -162,7 +166,7 @@ class DraftFactory
         return Promise.resolve(candidateDrafts.pop())
 
       else if behavior is 'prefer-existing-if-pristine'
-        DraftStore ?= require './draft-store'
+        DraftStore ?= require('./draft-store').default
         return Promise.all(candidateDrafts.map (candidateDraft) =>
           DraftStore.sessionForClientId(candidateDraft.clientId)
         ).then (sessions) =>

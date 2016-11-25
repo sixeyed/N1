@@ -1,13 +1,14 @@
 path = require 'path'
+url = require 'url'
 
 _ = require 'underscore'
-{remote} = require 'electron'
+{ipcRenderer, remote} = require 'electron'
 EmitterMixin = require('emissary').Emitter
 {Emitter} = require 'event-kit'
 fs = require 'fs-plus'
 Q = require 'q'
 
-Actions = require './flux/actions'
+Actions = require('./flux/actions').default
 Package = require './package'
 ThemePackage = require './theme-package'
 DatabaseStore = require('./flux/stores/database-store').default
@@ -58,6 +59,8 @@ class PackageManager
     @packageActivators = []
     @registerPackageActivator(this, ['nylas'])
 
+    ipcRenderer.on("changePluginStateFromUrl", @_onChangePluginState)
+
 
   pluginIdFor: (packageName) =>
     env = NylasEnv.config.get("env")
@@ -66,6 +69,40 @@ class PackageManager
     if @cachedPackagePluginIds[cacheKey] is undefined
       @cachedPackagePluginIds[cacheKey] = @_resolvePluginIdFor(packageName, env)
     return @cachedPackagePluginIds[cacheKey]
+
+  _onChangePluginState: (event, urlToOpen = "") =>
+    {query} = url.parse(urlToOpen, true)
+    disabled = NylasEnv.config.get('core.disabledPackages') ? []
+    turnedOn = []
+    turnedOff = []
+    for name, state of query
+      continue if /-displayName/gi.test(name)
+      displayName = query["#{name}-displayName"] ? name
+      if state is "off" and name not in disabled
+        turnedOff.push(displayName)
+        if name not in disabled then disabled.push(name)
+      else if state is "on"
+        turnedOn.push(displayName)
+        disabled = _.without(disabled, name)
+    NylasEnv.config.set('core.disabledPackages', disabled)
+    if NylasEnv.isMainWindow() then NylasEnv.focus()
+    if turnedOn.length > 0 then @_notifyPluginsChanged(turnedOn, "enabled")
+    if turnedOff.length > 0 then @_notifyPluginsChanged(turnedOff, "disabled")
+
+  _notifyPluginsChanged: (names, dir) =>
+    if names.length >= 2
+      last = names[names.length - 1]
+      names[names.length - 1] = "and #{last}"
+    has = if names.length is 1 then "has" else "have"
+    pluginText = if names.length is 1 then "Plugin" else "Plugins"
+    setTimeout =>
+      remote.dialog.showMessageBox(remote.getCurrentWindow(), {
+        type: 'info',
+        message: "#{pluginText} #{dir}",
+        detail: "#{names.join(", ")} #{has} been #{dir}"
+        buttons: ['Thanks'],
+      })
+    , 500
 
   _resolvePluginIdFor: (packageName, env) =>
     metadata = @loadedPackages[packageName]?.metadata
@@ -147,7 +184,7 @@ class PackageManager
     commandName = 'apm'
     commandName += '.cmd' if process.platform is 'win32'
 
-    @apmPath = path.join(process.resourcesPath, 'app', 'apm', 'bin', commandName)
+    @apmPath = path.join(process.resourcesPath, 'apm', 'bin', commandName)
     if not fs.isFileSync(@apmPath)
       @apmPath = path.join(@resourcePath, 'apm', 'bin', commandName)
     if not fs.isFileSync(@apmPath)

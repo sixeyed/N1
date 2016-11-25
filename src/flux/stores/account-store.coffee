@@ -1,6 +1,6 @@
 _ = require 'underscore'
 NylasStore = require 'nylas-store'
-Actions = require '../actions'
+Actions = require('../actions').default
 Account = require('../models/account').default
 Utils = require '../models/utils'
 DatabaseStore = require('./database-store').default
@@ -243,8 +243,8 @@ class AccountStore extends NylasStore
 
   emailAddresses: ->
     addresses = _.pluck((@accounts() ? []), "emailAddress")
-    addresses = addresses.concat(_.pluck((@aliases() ? [])), "email")
-    return addresses
+    addresses = addresses.concat(_.pluck((@aliases() ? []), "email"))
+    return _.unique(addresses)
 
   aliases: =>
     @_cachedGetter "aliases", =>
@@ -279,7 +279,7 @@ class AccountStore extends NylasStore
     Message = require('../models/message').default
     Account = require('../models/account').default
     Thread = require('../models/thread').default
-    Label = require '../models/label'
+    Label = require('../models/label').default
 
     @_caches = {}
 

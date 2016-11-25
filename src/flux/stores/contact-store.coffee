@@ -2,13 +2,14 @@ fs = require 'fs'
 path = require 'path'
 Reflux = require 'reflux'
 Rx = require 'rx-lite'
-Actions = require '../actions'
-Contact = require '../models/contact'
+Actions = require('../actions').default
+Contact = require('../models/contact').default
 Utils = require '../models/utils'
 NylasStore = require 'nylas-store'
 RegExpUtils = require '../../regexp-utils'
 DatabaseStore = require('./database-store').default
 AccountStore = require './account-store'
+ComponentRegistry = require('../../registries/component-registry')
 ContactRankingStore = require './contact-ranking-store'
 _ = require 'underscore'
 
@@ -47,7 +48,8 @@ class ContactStore extends NylasStore
     search = search.toLowerCase()
     accountCount = AccountStore.accounts().length
 
-    return Promise.resolve([]) if not search or search.length is 0
+    if not search or search.length is 0
+      return Promise.resolve([])
 
     # Search ranked contacts which are stored in order in memory
     results = []
@@ -56,18 +58,16 @@ class ContactStore extends NylasStore
           contact.name.toLowerCase().indexOf(search) isnt -1)
         results.push(contact)
       if results.length is limit
-        return Promise.resolve(results)
+        break
 
     # If we haven't found enough items in memory, query for more from the
     # database. Note that we ask for LIMIT * accountCount because we want to
     # return contacts with distinct email addresses, and the same contact
     # could exist in every account. Rather than make SQLite do a SELECT DISTINCT
     # (which is very slow), we just ask for more items.
-    query = DatabaseStore.findAll(Contact).whereAny([
-      Contact.attributes.name.like(search),
-      Contact.attributes.email.like(search)
-    ])
-    query.limit(limit * accountCount)
+    query = DatabaseStore.findAll(Contact)
+      .search(search)
+      .limit(limit * accountCount)
     query.then (queryResults) =>
       existingEmails = _.pluck(results, 'email')
 
@@ -76,9 +76,16 @@ class ContactStore extends NylasStore
       queryResults = @_distinctByEmail(queryResults)
 
       results = results.concat(queryResults)
-      results.length = limit if results.length > limit
 
-      return Promise.resolve(results)
+      extensions = ComponentRegistry.findComponentsMatching({
+        role: "ContactSearchResults"
+      })
+      return Promise.each extensions, (ext) =>
+        return ext.findAdditionalContacts(search, results).then (contacts) =>
+          results = contacts
+      .then =>
+        if (results.length > limit) then results.length = limit
+        return Promise.resolve(results)
 
   isValidContact: (contact) =>
     return false unless contact instanceof Contact
@@ -148,7 +155,7 @@ class ContactStore extends NylasStore
       (- (rankings[email.toLowerCase()] ? 0) / 1)
     emails.length = 400 if emails.length > 400
 
-    DatabaseStore.findAll(Contact, {email: emails}).then (contacts) =>
+    DatabaseStore.findAll(Contact, {email: emails}).background().then (contacts) =>
       contacts = @_distinctByEmail(contacts)
       for contact in contacts
         contact._rank = (- (rankings[contact.email.toLowerCase()] ? 0) / 1)

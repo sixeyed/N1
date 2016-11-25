@@ -1,11 +1,12 @@
 /* eslint react/jsx-no-bind: 0 */
 import _ from 'underscore'
+import Rx from 'rx-lite'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import moment from 'moment-timezone'
 import classnames from 'classnames'
 import {Utils} from 'nylas-exports'
-
+import {ScrollRegion} from 'nylas-component-kit'
 import TopBanner from './top-banner'
 import HeaderControls from './header-controls'
 import FooterControls from './footer-controls'
@@ -14,7 +15,7 @@ import EventGridBackground from './event-grid-background'
 import WeekViewEventColumn from './week-view-event-column'
 import WeekViewAllDayEvents from './week-view-all-day-events'
 import CalendarEventContainer from './calendar-event-container'
-
+import CurrentTimeIndicator from './current-time-indicator'
 
 const BUFFER_DAYS = 7; // in each direction
 const DAYS_IN_VIEW = 7;
@@ -31,6 +32,7 @@ export default class WeekView extends React.Component {
   static propTypes = {
     dataSource: React.PropTypes.instanceOf(CalendarDataSource).isRequired,
     currentMoment: React.PropTypes.instanceOf(moment).isRequired,
+    focusedEvent: React.PropTypes.object,
     bannerComponents: React.PropTypes.node,
     headerComponents: React.PropTypes.node,
     footerComponents: React.PropTypes.node,
@@ -40,6 +42,10 @@ export default class WeekView extends React.Component {
     onCalendarMouseUp: React.PropTypes.func,
     onCalendarMouseDown: React.PropTypes.func,
     onCalendarMouseMove: React.PropTypes.func,
+    onEventClick: React.PropTypes.func,
+    onEventDoubleClick: React.PropTypes.func,
+    onEventFocused: React.PropTypes.func,
+    selectedEvents: React.PropTypes.arrayOf(React.PropTypes.object),
   }
 
   static defaultProps = {
@@ -47,6 +53,9 @@ export default class WeekView extends React.Component {
     bannerComponents: false,
     headerComponents: false,
     footerComponents: false,
+    onCalendarMouseUp: () => {},
+    onCalendarMouseDown: () => {},
+    onCalendarMouseMove: () => {},
   }
 
   constructor(props) {
@@ -91,18 +100,40 @@ export default class WeekView extends React.Component {
     return moment()
   }
 
+  _mouseHandlerSubscribe = (observer) => {
+    this._observer = observer;
+    observer.onNext({});
+  }
+
   _initializeComponent(props) {
     this.todayYear = this._now().year()
     this.todayDayOfYear = this._now().dayOfYear()
-    if (this._sub) { this._sub.dispose() }
-    const startMoment = this._calculateStartMoment(props)
-    const endMoment = this._calculateEndMoment(props)
+
+    if (this._sub) {
+      this._sub.dispose();
+    }
+
+    const startMoment = this._calculateStartMoment(props);
+    const endMoment = this._calculateEndMoment(props);
+
+    const mouseHandlerObserver = Rx.Observable.create(this._mouseHandlerSubscribe);
     this._sub = this.props.dataSource.buildObservable({
+      disabledCalendars: props.disabledCalendars,
       startTime: startMoment.unix(),
       endTime: endMoment.unix(),
-      disabledCalendars: props.disabledCalendars,
-    }).subscribe((state) => { this.setState(state) })
+      mouseHandlerObserver: mouseHandlerObserver,
+    }).subscribe((state) => {
+      this.setState(state);
+    })
     this.setState({startMoment, endMoment})
+
+    const percent = (this._scrollTime - startMoment.unix()) / (endMoment.unix() - startMoment.unix())
+    if (percent < 0 || percent > 1) {
+      this._scrollTime = startMoment.unix();
+    } else {
+      const weekStart = moment(props.currentMoment).startOf('day').weekday(0).unix()
+      this._scrollTime = weekStart
+    }
   }
 
   _calculateStartMoment(props) {
@@ -159,8 +190,12 @@ export default class WeekView extends React.Component {
         key={day.valueOf()}
         events={events}
         eventOverlap={this._eventOverlap(events)}
+        focusedEvent={this.props.focusedEvent}
+        selectedEvents={this.props.selectedEvents}
+        onEventClick={this.props.onEventClick}
+        onEventDoubleClick={this.props.onEventDoubleClick}
+        onEventFocused={this.props.onEventFocused}
       />
-
     )
   }
 
@@ -180,14 +215,23 @@ export default class WeekView extends React.Component {
    */
   _eventOverlap(events) {
     const times = {}
+    const overlapById = {}
     for (const event of events) {
+      // We want dragged events to stay full-width. Since width is calculated
+      // by number of concurrentEvents, mock that out here.
+      if (event.dragged) {
+        overlapById[event.id] = {
+          concurrentEvents: 1,
+          order: 1,
+        };
+        continue;
+      }
       if (!times[event.start]) { times[event.start] = [] }
       if (!times[event.end]) { times[event.end] = [] }
       times[event.start].push(event)
       times[event.end].push(event)
     }
     const sortedTimes = Object.keys(times).map((k) => parseInt(k, 10)).sort();
-    const overlapById = {}
     let startedEvents = []
     for (const t of sortedTimes) {
       for (const e of times[t]) {
@@ -272,22 +316,16 @@ export default class WeekView extends React.Component {
   }
 
   _onClickToday = () => {
-    this._onChangeCurrentMoment(this._now())
+    this.props.changeCurrentMoment(this._now())
   }
 
   _onClickNextWeek = () => {
     const newMoment = moment(this.props.currentMoment).add(1, 'week')
-    this._onChangeCurrentMoment(newMoment)
+    this.props.changeCurrentMoment(newMoment)
   }
 
   _onClickPrevWeek = () => {
     const newMoment = moment(this.props.currentMoment).subtract(1, 'week')
-    this._onChangeCurrentMoment(newMoment)
-  }
-
-  _onChangeCurrentMoment(newMoment) {
-    const weekStart = moment(newMoment).startOf('day').weekday(0).unix()
-    this._scrollTime = weekStart
     this.props.changeCurrentMoment(newMoment)
   }
 
@@ -301,7 +339,7 @@ export default class WeekView extends React.Component {
   }
 
   // This generates the ticks used mark the event grid and the
-  // correspodning legend in the week view.
+  // corresponding legend in the week view.
   * _tickGenerator({type}) {
     const height = this._gridHeight();
 
@@ -347,21 +385,23 @@ export default class WeekView extends React.Component {
     });
   }
 
-  _onGridScroll = (event) => {
+  _onScrollGrid = (event) => {
     ReactDOM.findDOMNode(this.refs.eventGridLegendWrap).scrollTop = event.target.scrollTop
   }
 
-  _onScrollCalWrap = (event) => {
+  _onScrollCalendarArea = (event) => {
     if (!event.target.scrollLeft) { return }
-    const percent = event.target.scrollLeft / event.target.scrollWidth
+    const percent = event.target.scrollLeft / event.target.scrollWidth;
     const weekStart = this.state.startMoment.unix()
     const weekEnd = this.state.endMoment.unix()
     this._scrollTime = weekStart + ((weekEnd - weekStart) * percent)
+
     if (percent < 0.25) {
       this._onClickPrevWeek()
     } else if (percent + (DAYS_IN_VIEW / (BUFFER_DAYS * 2 + DAYS_IN_VIEW)) > 0.95) {
       this._onClickNextWeek()
     }
+    this._ensureHorizontalScrollPos();
   }
 
   _ensureHorizontalScrollPos() {
@@ -390,13 +430,28 @@ export default class WeekView extends React.Component {
     return (BUFFER_DAYS * 2 + DAYS_IN_VIEW) / DAYS_IN_VIEW
   }
 
+  _sendMouseEventToObserver = (args) => {
+    if (this._observer) {
+      this._observer.onNext(args)
+    }
+  }
+
+  _onCalendarMouseDown = (args) => {
+    this._sendMouseEventToObserver(args);
+    this.props.onCalendarMouseDown(args);
+  }
+
   _onCalendarMouseMove = (args) => {
+    this._sendMouseEventToObserver(args);
+    this.props.onCalendarMouseMove(args)
     if (this.refs.eventGridBg) {
       this.refs.eventGridBg.mouseMove(args)
     }
-    if (this.props.onCalendarMouseMove) {
-      this.props.onCalendarMouseMove(args)
-    }
+  }
+
+  _onCalendarMouseUp = (args) => {
+    this._sendMouseEventToObserver(args);
+    this.props.onCalendarMouseUp(args);
   }
 
   // We calculate events by days so we only need to iterate through all
@@ -428,17 +483,19 @@ export default class WeekView extends React.Component {
 
   render() {
     const days = this._daysInView();
+    const todayColumnIdx = days.findIndex(d => this._isToday(d));
     const eventsByDay = this._eventsByDay(days)
     const allDayOverlap = this._eventOverlap(eventsByDay.allDay);
     const tickGen = this._tickGenerator.bind(this);
+    const gridHeight = this._gridHeight();
 
     return (
       <div className="calendar-view week-view">
         <CalendarEventContainer
           ref="calendarEventContainer"
-          onCalendarMouseUp={this.props.onCalendarMouseUp}
-          onCalendarMouseDown={this.props.onCalendarMouseDown}
-          onCalendarMouseMove={this.props.onCalendarMouseMove}
+          onCalendarMouseUp={this._onCalendarMouseUp}
+          onCalendarMouseDown={this._onCalendarMouseDown}
+          onCalendarMouseMove={this._onCalendarMouseMove}
         >
           <TopBanner bannerComponents={this.props.bannerComponents} />
 
@@ -459,7 +516,7 @@ export default class WeekView extends React.Component {
                 <span className="legend-text">All Day</span>
               </div>
               <div className="event-grid-legend-wrap" ref="eventGridLegendWrap">
-                <div className="event-grid-legend" style={{height: this._gridHeight()}}>
+                <div className="event-grid-legend" style={{height: gridHeight}}>
                   {this._renderEventGridLabels()}
                 </div>
               </div>
@@ -468,7 +525,7 @@ export default class WeekView extends React.Component {
             <div
               className="calendar-area-wrap"
               ref="calendarAreaWrap"
-              onScroll={this._onScrollCalWrap}
+              onScroll={this._onScrollCalendarArea}
             >
               <div className="week-header" style={{width: `${this._bufferRatio() * 100}%`}}>
                 <div className="date-labels">
@@ -485,24 +542,35 @@ export default class WeekView extends React.Component {
                   allDayOverlap={allDayOverlap}
                 />
               </div>
-              <div
+              <ScrollRegion
                 className="event-grid-wrap"
                 ref="eventGridWrap"
-                onScroll={this._onGridScroll}
+                getScrollbar={() => this.refs.scrollbar}
+                onScroll={this._onScrollGrid}
                 style={{width: `${this._bufferRatio() * 100}%`}}
               >
-                <div className="event-grid" style={{height: this._gridHeight()}}>
+                <div className="event-grid" style={{height: gridHeight}}>
                   {days.map(_.partial(this._renderEventColumn, eventsByDay))}
+                  <CurrentTimeIndicator
+                    visible={(todayColumnIdx > BUFFER_DAYS && todayColumnIdx <= (BUFFER_DAYS + DAYS_IN_VIEW))}
+                    gridHeight={gridHeight}
+                    numColumns={BUFFER_DAYS * 2 + DAYS_IN_VIEW}
+                    todayColumnIdx={todayColumnIdx}
+                  />
                   <EventGridBackground
-                    height={this._gridHeight()}
+                    height={gridHeight}
                     intervalHeight={this.state.intervalHeight}
                     numColumns={BUFFER_DAYS * 2 + DAYS_IN_VIEW}
                     ref="eventGridBg"
                     tickGenerator={tickGen}
                   />
                 </div>
-              </div>
+              </ScrollRegion>
             </div>
+            <ScrollRegion.Scrollbar
+              ref="scrollbar"
+              getScrollRegion={() => this.refs.eventGridWrap}
+            />
           </div>
 
           <FooterControls footerComponents={this.props.footerComponents} />

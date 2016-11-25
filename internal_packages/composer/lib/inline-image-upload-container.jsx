@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import fs from 'fs';
 import path from 'path';
-import ImageUpload from './image-upload';
+import {Actions, ImageAttachmentItem} from 'nylas-component-kit'
 
 export default class InlineImageUploadContainer extends Component {
   static displayName = 'InlineImageUploadContainer';
@@ -11,16 +11,16 @@ export default class InlineImageUploadContainer extends Component {
 
   static propTypes = {
     draft: PropTypes.object.isRequired,
-    session: PropTypes.object.isRequired,
     uploadId: PropTypes.string.isRequired,
+    session: PropTypes.object,
     isPreview: PropTypes.bool,
   }
 
-  componentDidMount() {
-
-  }
-
   _onGoEdit = () => {
+    if (!this.props.session) {
+      console.warn("InlineImage editor cannot be activated, `session` prop not present. (isPreview?)")
+      return;
+    }
     // This is just a fun temporary hack because I was jealous of Apple Mail.
     //
     const el = ReactDOM.findDOMNode(this);
@@ -42,7 +42,7 @@ export default class InlineImageUploadContainer extends Component {
     editorEl.appendChild(editorCanvas);
 
     const editorCtx = editorCanvas.getContext("2d");
-    editorCtx.drawImage(el.querySelector('img.upload'), 0, 0, editorCanvas.width, editorCanvas.height);
+    editorCtx.drawImage(el.querySelector('.file-preview img'), 0, 0, editorCanvas.width, editorCanvas.height);
     editorCtx.strokeStyle = "#df4b26";
     editorCtx.lineJoin = "round";
     editorCtx.lineWidth = 3 * window.devicePixelRatio;
@@ -100,7 +100,7 @@ export default class InlineImageUploadContainer extends Component {
               NylasEnv.showErrorDialog(err.toString())
               return;
             }
-            const img = el.querySelector('img.upload');
+            const img = el.querySelector('.file-preview img');
             img.style.width = `${rect.width}px`;
             img.style.height = `${rect.height}px`;
             img.src = `${img.src}?${Date.now()}`;
@@ -146,7 +146,13 @@ export default class InlineImageUploadContainer extends Component {
         className="inline-image-upload-container"
         onDoubleClick={this._onGoEdit}
       >
-        <ImageUpload key={uploadId} upload={upload} />
+        <ImageAttachmentItem
+          className="file-upload"
+          draggable={false}
+          filePath={upload.targetPath}
+          displayName={upload.filename}
+          onRemoveAttachment={() => Actions.removeAttachment(upload)}
+        />
       </div>
     )
   }

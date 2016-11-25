@@ -6,12 +6,11 @@ fs = require 'fs-plus'
 EmitterMixin = require('emissary').Emitter
 {Emitter, CompositeDisposable} = require 'event-kit'
 Q = require 'q'
-{deprecate} = require 'grim'
 
 ModuleCache = require './module-cache'
 
-TaskRegistry = require('./task-registry').default
-DatabaseObjectRegistry = require('./database-object-registry').default
+TaskRegistry = require('./registries/task-registry').default
+DatabaseObjectRegistry = require('./registries/database-object-registry').default
 
 try
   packagesCache = require('../package.json')?._N1Packages ? {}
@@ -46,7 +45,6 @@ class Package
     metadata.name = packageName
 
     if metadata.stylesheets?
-      deprecate("Use the `styleSheets` key instead of `stylesheets` in the `package.json` of `#{packageName}`", {packageName})
       metadata.styleSheets = metadata.stylesheets
 
     metadata
@@ -233,6 +231,9 @@ class Package
     catch e
       console.error "Error reading menus for package '#{@name}': #{e.message}", e.stack
 
+    for [menuPath, menuObj] in @menus
+      menuItem.isOptional = @metadata.isOptional for menuItem in menuObj.menu
+
   getKeymapPaths: ->
     keymapsDirPath = path.join(@path, 'keymaps')
     if @metadata.keymaps
@@ -253,7 +254,6 @@ class Package
 
   getStylesheetsPath: ->
     if fs.isDirectorySync(path.join(@path, 'stylesheets'))
-      deprecate("Store package style sheets in the `styles/` directory instead of `stylesheets/` in the `#{@name}` package", packageName: @name)
       path.join(@path, 'stylesheets')
     else
       path.join(@path, 'styles')

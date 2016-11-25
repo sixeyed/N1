@@ -1,5 +1,131 @@
 # N1 Changelog
 
+### 0.4.400 (11/22/16)
+
+- Features:
+  + New Salesforce private beta plugin.
+
+- Fixes:
+
+  + Improvements to quoted text folding
+  + Fixes to the creation of bullets & lists in the composer
+  + Send and Archive fixed in composer windows
+  + Typing in the composer with misspelled words is now much faster
+
+- Development:
+
+  + We now use `electron-packager` to build N1
+  + `script/bootstrap` has been replaced with a much simpler install flow built on `electron-compile`
+  + Removed devDependencies from main package.json reducing file size
+  + We no longer support Node 4 for building
+  + New background worker to parallelize expensive database queries
+
+
+### 0.4.204 (11/7/16)
+
+- Features:
+
+  + You can now select multiple recipients from the composer fields at once,
+    and cut, copy, paste and drag them between other recipient fields.
+  + You can now undo sending a message, and configure the time available to undo
+    it from within N1 Preferences.
+  + You can now create reminders on sent messages which will remind you if you
+    don't receive a reply to a message within a specified time in the future.
+  + On macOS, you can now preview attachments using the space key or the new
+    quick look icon. Attachment items will now also display a thumbnail preview
+    for the file when available.
+
+- Fixes:
+
+  + N1 no longer freezes when submitting a search in the search bar. (#3001)
+  + Escape key now correctly clears the current search value.
+  + Thread windows now correctly hide deleted messages depending on which
+    view you opened them from (e.g. hide deleted messages when opened from the
+    inbox, but not when opened from the trash folder).
+  + Several message height display issues have been fixed.
+  + In preferences, N1 will now only scroll to the top when switching tabs.
+  + Allow in-app notifications to be dismissable.
+  + Ensure that a send message request succeeds only once.
+  + Ensure that the latest state of our TaskQueue is saved before closing N1.
+  + Improved quoted text detection for trailing signatures.
+
+- Design:
+
+  + Design for in-app notifications has been cleaned up.
+  + Theme-picker styles have been fixed.
+
+- Development:
+
+  + A lot more code has been converted from Coffeescript to Javascript,
+    including all remaining database `Model` classes.
+  + We've re-enabled running N1 tests from within N1.
+  + We've made several improvements to the build process.
+  + Completely removed the deprecated Popover component.
+  + Removed `grim` package, which was completely unused.
+  + `TokenizingTextField` from the component-kit now supports a new prop: `onEditMotion`.
+
+
+### 0.4.201 (11/3/16)
+
+- Fixes:
+
+  + N1 no longer freezes when searching for contacts in the search bar. (#3001)
+
+
+### 0.4.59 (10/24/16)
+
+- Features:
+
+  + Spellchecker: Spellchecker now intelligently detects different languages
+    across Windows, Mac and Linux.
+  + You can now select N1 as the default mail client on Windows.
+  + You can now open threads in a new window.
+  + You can now pick which of your calendars you want displayed in the calendar
+    view when proposing times to meet.
+  + Automatically add N1 to the dock on install (Mac only).
+
+- Fixes:
+
+  + N1 no longer becomes locked when offline.
+  + Thread sharing popover is now correctly closed when blurred or when a new
+    thread is selected.
+  + Tutorial tips are now correctly positioned when the theme is changed and
+    correctly hidden when the element they are attached to is not visible.
+  + Spellchecker no longer spellchecks `<code>`, `<a>`, `<pre>` tags.
+  + Inline Images: When download mode is “manual”, add an option to manually
+    download inline images.
+  + Mail Merge now correctly sends inline images
+  + Mail Rules: Allow recipient filters to contain names (#2942)
+  + Correctly detect dev mode. This will prevent errors from popping out in the
+    developer console unless you are actually running in dev mode.
+  + When copying participants, include space (#2871).
+  + Notifications will no longer error when the thread is not found.
+  + Phishing now correctly handles scenarios where input is malformed.
+  + QuickReplies now correctly handles errors when scanning templates directory.
+  + Enabled click regions on margins of composer.
+  + In composer, can now Shift-Tab back to the subject correctly.
+  + Allow mailto links to have bodies with \n or \r characters.
+  + Prevent tutorial tips from breaking send later button.
+  + Add preview as recipient toggle back to composer.
+  + No longer display outdated welcome message in the onboarding window.
+
+- Design:
+
+  + All notification bars previously displayed at the top of the main window are
+    now displayed in the lower left side of the window with an improved design.
+
+- Development:
+
+  + We switched our SQLite bindings from `node-sqlite3` to `better-sqlite3`
+    which improves query performance by ~28%, and fixes an error which
+    caused the database to become locked.
+  + Dev mode: No longer store devMode flag in `config.json` to prevent the
+    production build from incorrectly running in dev mode.
+    Rather, run N1 with `--dev` flag.
+  + All database-related code (ORM) has been transitioned to ES6.
+  + Improve spec bootup process.
+
+
 ### 0.4.56 (9/29/16)
 
 - Features:

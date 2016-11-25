@@ -1,7 +1,7 @@
 import Actions from '../actions'
 import DatabaseStore from './database-store'
 import Message from '../models/message'
-import * as ExtensionRegistry from '../../extension-registry'
+import * as ExtensionRegistry from '../../registries/extension-registry'
 import SyncbackDraftFilesTask from '../tasks/syncback-draft-files-task'
 import DOMUtils from '../../dom-utils'
 
@@ -64,12 +64,6 @@ export function messageMentionsAttachment({body} = {}) {
     cleaned = cleaned.substr(0, signatureIndex - 1);
   }
   return (cleaned.indexOf("attach") >= 0);
-}
-
-export function queueDraftFileUploads(draft) {
-  if (draft.files.length > 0 || draft.uploads.length > 0) {
-    Actions.queueTask(new SyncbackDraftFilesTask(draft.clientId))
-  }
 }
 
 export function appendQuotedTextToDraft(draft) {
@@ -135,9 +129,11 @@ export function prepareDraftForSyncback(session) {
     return DatabaseStore.inTransaction((t) =>
       t.persistModel(draft)
     )
-    .then(() =>
-      Promise.resolve(queueDraftFileUploads(draft))
-    )
+    .then(() => {
+      if (draft.files.length > 0 || draft.uploads.length > 0) {
+        Actions.queueTask(new SyncbackDraftFilesTask(draft.clientId))
+      }
+    })
     .thenReturn(draft)
   })
 }
